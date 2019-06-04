@@ -1,0 +1,85 @@
+-- except-all
+
+-- Once again, to set up the context for these examples, we use SQL commands
+-- that have not been covered yet in the course, such as CREATE TABLE
+-- and INSERT INTO.  They are a preview of material to come in about a week,
+-- but you don't need to understand these commands in any detail yet.
+-- The point of these examples is something else: how and when duplicates can
+-- exist in a table, and can be returned by a query.
+
+-- Punchline for this example:
+-- The ALL in "EXCEPT ALL" determines not only how many times a tuple occurs
+-- but whether or not it occurs at all!
+
+-- Setup:
+
+csc343h-dianeh=> create table P (a int, b int);
+csc343h-dianeh=> create table Q (a int, c int);
+csc343h-dianeh=> insert into P values 
+csc343h-dianeh-> (1, 151), (2, 123), (3, 432), (1, 333), (1, 345), 
+csc343h-dianeh-> (4, 912), (5, 123);
+csc343h-dianeh=> insert into Q values 
+csc343h-dianeh-> (1, 44), (3, 88), (3, 12), (9, 12);
+
+csc343h-dianeh=> select * from P;
+ a |  b  
+---+-----
+ 1 | 151
+ 2 | 123
+ 3 | 432
+ 1 | 333
+ 1 | 345
+ 4 | 912
+ 5 | 123
+(7 rows)
+
+csc343h-dianeh=> select * from Q;
+ a | c  
+---+----
+ 1 | 44
+ 3 | 88
+ 3 | 12
+ 9 | 12
+(4 rows)
+
+-- With EXCEPT, a single occurence of a value for a in Q wipes out 
+-- all occurences of it from P.  In this case, every 1 value in P
+-- is removed as a result of a single 1 value in Q.
+
+csc343h-dianeh=> (select a from P) except (select a from Q);
+ a 
+---
+ 2
+ 4                <-- There are no 1s anywhere in this result
+ 5
+(3 rows)
+
+-- But with EXCEPT ALL, we match them up one for one.
+-- (And the same diagram and matching can be used to predict the
+-- results in whichever direction we are subtracting)
+-- Now some of the 1 values are left behind after the set difference.
+
+csc343h-dianeh=> (select a from P) except all (select a from Q);
+ a 
+---
+ 1                <-- There are two 1s in this result
+ 1
+ 2
+ 4
+ 5
+(5 rows)
+
+-- Checking the two kinds of set difference in the other direction now.
+
+csc343h-dianeh=> (select a from Q) except (select a from P);
+ a 
+---
+ 9
+(1 row)
+
+csc343h-dianeh=> (select a from Q) except all (select a from P);
+ a 
+---
+ 3
+ 9
+(2 rows)

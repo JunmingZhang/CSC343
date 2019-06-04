@@ -1,0 +1,74 @@
+-- 
+-- Let's see what's in the took table:
+
+csc343h-dianeh=> select * from took;
+  sid  | oid | grade 
+-------+-----+-------
+ 99132 |   1 |    79
+ 99132 |  16 |    98
+ 99132 |  31 |    82
+ 99132 |  11 |    99
+ 99132 |  14 |    39
+ 99132 |  15 |    62
+ 99132 |  34 |    75
+ 98000 |  11 |    79
+ 98000 |   1 |    82
+ 98000 |   5 |    89
+ 98000 |   6 |    72
+ 98000 |   7 |    89
+ 98000 |   8 |    93
+ 98000 |  13 |    98
+ 98000 |  16 |    79
+ 98000 |  17 |    79
+ 98000 |  22 |    54
+ 98000 |  27 |    89
+ 98000 |  31 |    78
+ 98000 |  38 |    92
+ 98000 |  39 |    97
+ 98000 |   9 |    78
+ 99999 |  11 |    99
+ 99999 |   1 |    89
+ 99999 |   5 |    76
+ . . . more rows omitted here
+ 11111 |  34 |    45
+ 11111 |  35 |    88
+(55 rows)
+
+-- SQL allows us to "aggregate" (collect together) all the data from a column
+-- and apply things to it, like average, min, max.  Here we use that to get
+-- the average of all the grades in took.  Notice that the result has just one 
+-- tuple now:
+
+csc343h-dianeh=> select avg(grade) from took;
+         avg         
+---------------------
+ 75.8545454545454545
+(1 row)
+
+-- SQL invented a name for this column.  It will do this for us when we simply
+-- call a function to aggregate, but not if we do some fancier calculation:
+
+csc343h-dianeh=> select max(grade) - min(grade) from took;
+ ?column? 
+----------
+      100
+
+-- Let's give the column a better name:
+csc343h-dianeh=> select max(grade) - min(grade) as range from took;
+ range 
+-------
+   100
+(1 row)
+
+-- Back to aggregation.
+-- We can do a bunch of aggregations in on query. Notice that we get a table 
+-- with one tuple.  The elements of the tuple are unrelated facts, although 
+-- they are about the same table. We can glue them together into a row
+-- because there is one max(grade) in took and on avg(grade), and one of 
+-- everything else.
+
+csc343h-dianeh=> select max(grade), avg(grade), count(*), min(sid) from took;
+ max |         avg         | count |  min  
+-----+---------------------+-------+-------
+ 100 | 82.4000000000000000 |    15 | 12345
+(1 row)

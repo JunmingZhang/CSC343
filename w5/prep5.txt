@@ -1,0 +1,88 @@
+dbsrv1:~$ psql
+psql: FATAL:  database "zhan4662" does not exist
+dbsrv1:~$ psql csc343h-zhan4662
+psql (9.5.17)
+Type "help" for help.
+
+csc343h-zhan4662=> \q
+dbsrv1:~$ \d
+-bash: d: command not found
+dbsrv1:~$ psql csc343h-zhan4662
+psql (9.5.17)
+Type "help" for help.
+
+csc343h-zhan4662=> \d
+No relations found.
+csc343h-zhan4662=> \q
+dbsrv1:~$ mkdir csc343db
+dbsrv1:~$ cd csc343db
+dbsrv1:~/csc343db$ cp ~csc343h/summer/pub/world.sql .
+dbsrv1:~/csc343db$ psql csc343h-zhan4662
+psql (9.5.17)
+Type "help" for help.
+
+csc343h-zhan4662=> \i world.sql
+BEGIN
+psql:world.sql:10: NOTICE:  schema "world" does not exist, skipping
+DROP SCHEMA
+CREATE SCHEMA
+SET
+SET
+CREATE TABLE
+CREATE TABLE
+INSERT 0 239
+INSERT 0 984
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+COMMIT
+csc343h-zhan4662=> SET search_path TO World
+csc343h-zhan4662-> \d
+	      List of relations
+ Schema |      Name       | Type  |  Owner   
+--------+-----------------+-------+----------
+ world  | country         | table | zhan4662
+ world  | countrylanguage | table | zhan4662
+(2 rows)
+
+csc343h-zhan4662-> SELECT * FROM country
+csc343h-zhan4662-> SELECT * FROM country;
+ERROR:  syntax error at or near "SELECT"
+LINE 2: SELECT * FROM country
+	^
+csc343h-zhan4662=> SELECT * FROM country
+csc343h-zhan4662-> ;
+csc343h-zhan4662=> SELECT * FROM country;
+csc343h-zhan4662=> q
+csc343h-zhan4662-> \q
+dbsrv1:~/csc343db$ vi sample_query.sql
+dbsrv1:~/csc343db$ psql csc343h-zhan4662
+psql (9.5.17)
+Type "help" for help.
+
+csc343h-zhan4662=> \i sample_query.sql
+SET
+ countrycode | countrylanguage  | isofficial | percentage 
+-------------+------------------+------------+------------
+ CAN         | English          | t          |       60.4
+ CAN         | French           | t          |       23.4
+ CAN         | Chinese          | f          |        2.5
+ CAN         | Italian          | f          |        1.7
+ CAN         | German           | f          |        1.6
+ CAN         | Polish           | f          |        0.7
+ CAN         | Spanish          | f          |        0.7
+ CAN         | Portuguese       | f          |        0.7
+ CAN         | Punjabi          | f          |        0.7
+ CAN         | Ukrainian        | f          |        0.6
+ CAN         | Dutch            | f          |        0.5
+ CAN         | Eskimo Languages | f          |        0.1
+(12 rows)
+
+csc343h-zhan4662=> q
+csc343h-zhan4662-> q
+csc343h-zhan4662-> \q
+dbsrv1:~/csc343db$ \q
+-bash: q: command not found
+dbsrv1:~/csc343db$ exit
+logout
+Connection to dbsrv1.teach.cs.toronto.edu closed.

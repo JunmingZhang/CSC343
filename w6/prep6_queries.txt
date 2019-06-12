@@ -1,0 +1,16 @@
+INSERT INTO country VALUES
+('BOR', 'Borduria', 'Pangaea', 1000),
+('CAG', 'Cagliostro', 'Pangaea', 250),
+('MAR', 'Qumar', 'Pangaea', 3380);
+
+INSERT INTO countrylanguage VALUES
+('BOR', 'English', NULL, NULL),
+('BOR', 'Italian', NULL, NULL),
+('BOR', 'Klingon', NULL, NULL);
+
+DELETE FROM country
+WHERE population < 300;
+
+UPDATE country
+SET continent = 'Luna'
+WHERE name = 'Borduria';

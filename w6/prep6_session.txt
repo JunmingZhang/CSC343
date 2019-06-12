@@ -1,0 +1,68 @@
+wolf:~$ ssh zhan4662@dbsrv1.teach.cs.toronto.edu
+	Type "faq" to view FAQ, and "rules" to view usage policy.
+	Report system problems by sending email to <sysadmin@teach.cs.toronto.edu>.
+
+The Teaching Labs are: BA2200 BA2210 BA2220 BA2240 BA2270 BA3175 BA3195 BA3200
+
+This is a shared Linux system. By using this system, you acknowledge that
+some information about your computer account (e.g. login name, process data,
+etc.) will be available to other users sharing this system, in ways 
+typical of shared Linux systems.  
+
+Last login: Wed Jun 12 02:21:32 2019 from wolf.teach.cs.toronto.edu
+dbsrv1:~$ cp ~csc343h/summer/pub/prep/w6/world_empty.sql .
+dbsrv1:~$ psql csc343h-zhan4662
+psql (9.5.17)
+Type "help" for help.
+
+csc343h-zhan4662=> \i world_empty.sql
+psql:world_empty.sql:1: NOTICE:  drop cascades to 2 other objects
+DETAIL:  drop cascades to table world.country
+drop cascades to table world.countrylanguage
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TABLE
+csc343h-zhan4662=> \q
+dbsrv1:~$ vim prep6_queries.txt
+dbsrv1:~$ psql csc343h-zhan4662
+psql (9.5.17)
+Type "help" for help.
+
+csc343h-zhan4662=> \i world_empty.sql
+psql:world_empty.sql:1: NOTICE:  drop cascades to 2 other objects
+DETAIL:  drop cascades to table world.country
+drop cascades to table world.countrylanguage
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TABLE
+csc343h-zhan4662=> \i prep6_queries.txt
+INSERT 0 3
+INSERT 0 3
+DELETE 1
+UPDATE 1
+csc343h-zhan4662=> SELECT *
+csc343h-zhan4662-> FROM country;
+ code |   name   | continent | population 
+------+----------+-----------+------------
+ MAR  | Qumar    | Pangaea   |       3380
+ BOR  | Borduria | Luna      |       1000
+(2 rows)
+
+csc343h-zhan4662=> SELECT *
+csc343h-zhan4662-> FROM countrylanguage
+csc343h-zhan4662-> ;
+ countrycode | countrylanguage | isofficial | percentage 
+-------------+-----------------+------------+------------
+ BOR         | English         |            |           
+ BOR         | Italian         |            |           
+ BOR         | Klingon         |            |           
+(3 rows)
+
+csc343h-zhan4662=> \q
+dbsrv1:~$ exit
+logout
+Connection to dbsrv1.teach.cs.toronto.edu closed.

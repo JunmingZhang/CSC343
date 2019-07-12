@@ -1,0 +1,34 @@
+wolf:~/JDBC_exercise$ ssh dbsrv1.teach.cs.toronto.edu
+	Type "faq" to view FAQ, and "rules" to view usage policy.
+	Report system problems by sending email to <sysadmin@teach.cs.toronto.edu>.
+
+The Teaching Labs are: BA2200 BA2210 BA2220 BA2240 BA2270 BA3175 BA3195 BA3200
+
+This is a shared Linux system. By using this system, you acknowledge that
+some information about your computer account (e.g. login name, process data,
+etc.) will be available to other users sharing this system, in ways 
+typical of shared Linux systems.  
+
+Last login: Thu Jul 11 01:21:33 2019 from wolf.teach.cs.toronto.edu
+dbsrv1:~$ cd JDBC*
+dbsrv1:~/JDBC_exercise$ psql csc343h-zhan4662
+psql (9.5.17)
+Type "help" for help.
+
+csc343h-zhan4662=> \i jelly-beans.sql
+psql:jelly-beans.sql:5: ERROR:  relation "guesses" already exists
+psql:jelly-beans.sql:18: ERROR:  duplicate key value violates unique constraint "guesses_pkey"
+DETAIL:  Key (number)=(1) already exists.
+csc343h-zhan4662=> \q
+dbsrv1:~/JDBC_exercise$ javac JDBC.java
+dbsrv1:~/JDBC_exercise$ java -cp /local/packages/jdbc-postgresql/postgresql-42.2.4.jar: JDBC
+What's the age you want to check? 
+6
+The average guess over the given age is: 628.75
+dbsrv1:~/JDBC_exercise$ exit
+logout
+Connection to dbsrv1.teach.cs.toronto.edu closed.
+wolf:~/JDBC_exercise$ exit
+logout
+Connection to teach.cs.toronto.edu closed.
+zhangjunmings-MacBook-Pro:~ peterzhang$ 

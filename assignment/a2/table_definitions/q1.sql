@@ -21,8 +21,7 @@ DROP VIEW IF EXISTS intermediate_step CASCADE;
 
 -- Define views for your intermediate steps here.
 
-
 -- the answer to the query 
-insert into q1 
+insert into q1
 
 

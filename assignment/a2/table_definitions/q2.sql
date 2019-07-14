@@ -29,7 +29,7 @@ WHERE c.id = e.country_id;
 CREATE VIEW in2001_2016 AS
 SELECT countryId, countryName, year, participationRatio
 FROM country_with_year_reatio
-WHERE year => 2001 and year <= 2016;
+WHERE year >= 2001 and year <= 2016;
 
 CREATE VIEW avg_Ratio as
 SELECT countryId, countryName, year, avg(participationRatio) as participationRatio

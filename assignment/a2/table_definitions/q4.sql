@@ -28,7 +28,7 @@ FROM cabinet JOIN country ON country.id = cabinet.country_id;
 -- pick up cabinetId to join with the correct cabinet
 CREATE VIEW ToCabinet AS
 SELECT politician_president.country_id AS CoID, cabinet_id AS cabinetId, end_date
-FROM politician_president JOIN cabinet_party ON politician_president.party_id = cabinet_party.party_id
+FROM  cabinet_party LEFT JOIN politician_president ON politician_president.party_id = cabinet_party.party_id
 
 -- add end date to the view
 -- also add partyID for later joining the name of the party with PM
@@ -40,14 +40,14 @@ FROM NationalCabinet JOIN ToCabinet ON NationalCabinet.CoID = ToCabinet.CoID
 -- find the name of the party fills the PM
 -- also add partyID for later joining the name of the party with PM
 CREATE VIEW PartyName AS
-SELECT party.name AS partyName, party.id AS partyID
+SELECT party.name AS partyName, cabinet_id
 FROM cabinet_party, party
 WHERE cabinet_party.party_id = party.id AND pm = True;
 
 -- join the name of the party with PM
 CREATE VIEW CabinetPmKnown AS
 SELECT countryName, cabinetId, startDate, endDate, partyName AS pmParty
-FROM NationalCabinetWithEnd LEFT JOIN PartyName ON NationalCabinetWithEnd.partyID = PartyName.partyID;
+FROM NationalCabinetWithEnd LEFT JOIN PartyName ON NationalCabinetWithEnd.cabinetID = PartyName.cabinet_id;
 
 
 

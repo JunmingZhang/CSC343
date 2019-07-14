@@ -82,7 +82,7 @@ public class Assignment2 extends JDBCSubmission {
             String selectedComment = null;
             List<Integer> result = new ArrayList<Integer>();
 
-            String selectedPoliticianSQL = "SELECT description1, comment1 " +
+            String selectedPoliticianSQL = "SELECT description AS description1, comment AS comment1 " +
                                            "FROM politician_president poli_pr " +
                                            "WHERE poli_pr.id = ?";
     
@@ -95,7 +95,7 @@ public class Assignment2 extends JDBCSubmission {
                 selectedComment = rs1.getString("comment1");
             }
 
-            String selectedOtherPoliticiansSQL = "SELECT description2, comment2, poli_pr.id AS PrId " +
+            String selectedOtherPoliticiansSQL = "SELECT description AS description2, comment AS comment2, poli_pr.id AS PrId " +
                                                 "FROM politician_president poli_pr " +
                                                 "WHERE poli_pr.id <> ?";
             
@@ -105,7 +105,7 @@ public class Assignment2 extends JDBCSubmission {
 
             while (rs2.next()) {
                 int PrId = rs2.getInt("PrId");
-                if (similarity(selectedDescription, rs2.getString("description2")) > threshold &&
+                if (similarity(selectedDescription, rs2.getString("description2")) +
                     similarity(selectedComment, rs2.getString("comment2")) > threshold) {
                         result.add(PrId);
                     }

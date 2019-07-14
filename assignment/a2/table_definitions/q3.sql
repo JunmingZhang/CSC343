@@ -15,6 +15,12 @@ CREATE TABLE q3(
 -- You may find it convenient to do this for each of the views
 -- that define your intermediate steps.  (But give them better names!)
 DROP VIEW IF EXISTS intermediate_step CASCADE;
+DROP VIEW IF EXISTS pastTwentyYearCabinets CASCADE;
+DROP VIEW IF EXISTS allCombos CASCADE;
+DROP VIEW IF EXISTS inCabinet CASCADE;
+DROP VIEW IF EXISTS notAlways CASCADE;
+DROP VIEW IF EXISTS commited CASCADE;
+DROP VIEW IF EXISTS answer CASCADE;
 
 -- Define views for your intermediate steps here.
 

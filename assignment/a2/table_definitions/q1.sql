@@ -38,13 +38,13 @@ CREATE VIEW win_party AS
 SELECT e.party_id as party_id, v.election_id as election_id
 FROM vote_result v, election_result e
 WHERE v.max_votes = e.votes
-and v.election_id = e.election.id;
+and v.election_id = e.election_id;
 
 CREATE VIEW win_count AS
 SELECT count(w.election_id) as wonElections, p.id as partyId, p.name as partyName, p.country_id AS country_id
 FROM win_party w, party p
 WHERE w.party_id = p.id
-GROUP BY w.party_id;
+GROUP BY p.id;
 
 CREATE VIEW avg_count AS
 SELECT avg(wonElections) as avg_times, country_id
@@ -58,11 +58,11 @@ WHERE w.election_id = e.id
 GROUP BY w.party_id;
 
 CREATE VIEW recentlyMost as
-SELECT e.id as mostRecentlyWonElectionId, extract(year from e.e_date) as mostRecentlyWonElectionYear, e.party_id as party_id
+SELECT e.id as mostRecentlyWonElectionId, extract(year from e.e_date) as mostRecentlyWonElectionYear, w.party_id as party_id
 FROM max_date m, election e, win_party w
 WHERE e.id = w.election_id
-and m.e_date = e.e_date
-and m.party_id = e.party_id;
+and m.recent_date = e.e_date
+and m.party_id = w.party_id;
 
 CREATE VIEW morethanThree as
 SELECT w.wonElections as wonElections, w.partyId as party_id, w.partyName as partyName, w.country_id as country_id
@@ -75,7 +75,7 @@ SELECT party_id, wonElections, partyName, country_id, mostRecentlyWonElectionId,
 FROM morethanThree NATURAL JOIN recentlyMost;
 
 CREATE VIEW final_answer as
-SELECT c.name as countryName, r.partyName as partyName, p.family as partyFamily, r.wonElections as wonElections, r.mostRecentlyWonElectionId as mostRecentlyWonElectionId, r.mostRecentlyWonElectionYear as mostRecentlyWonElectionYear
+SELECT c.name as countryName, r.party_id as partyName, p.family as partyFamily, r.wonElections as wonElections, r.mostRecentlyWonElectionId as mostRecentlyWonElectionId, r.mostRecentlyWonElectionYear as mostRecentlyWonElectionYear
 FROM recently_more_win_party r, country c, party_family p
 WHERE r.party_id = p.party_id
 and r.country_id = c.id;

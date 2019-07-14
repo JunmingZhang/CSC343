@@ -22,7 +22,7 @@ DROP VIEW IF EXISTS country_NonDecreasing CASCADE;
 
 -- Define views for your intermediate steps here.
 CREATE VIEW country_with_year_reatio AS
-SELECT c.id as countryId, c.name as countryName, extract(year from e.e_date) as year, cast(e.vote_cast as float)/cast(e.electorate as float) AS participationRatio
+SELECT c.id as countryId, c.name as countryName, extract(year from e.e_date) as year, cast(e.votes_cast as float)/cast(e.electorate as float) AS participationRatio
 FROM election e, country c
 WHERE c.id = e.country_id;
 
@@ -34,12 +34,12 @@ WHERE year >= 2001 and year <= 2016;
 CREATE VIEW avg_Ratio as
 SELECT countryId, countryName, year, avg(participationRatio) as participationRatio
 FROM in2001_2016
-GROUP BY countryId, countryName, year
+GROUP BY countryId, countryName, year;
 
 CREATE VIEW country_decreasing as
 SELECT r1.countryId as countryId, r1.countryName as countryName
 FROM avg_Ratio r1, avg_Ratio r2
-WHERE r1.countryId = r2.countryId and r1.countryName = r2.countryName and r1.year < r2.year and r1.participationRatio > r2.participationRatio
+WHERE r1.countryId = r2.countryId and r1.countryName = r2.countryName and r1.year < r2.year and r1.participationRatio > r2.participationRatio;
 
 CREATE VIEW country_NonDecreasing as
 SELECT countryName, year, participationRatio

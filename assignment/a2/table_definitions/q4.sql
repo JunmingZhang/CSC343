@@ -16,6 +16,11 @@ CREATE TABLE q4(
 -- You may find it convenient to do this for each of the views
 -- that define your intermediate steps.  (But give them better names!)
 DROP VIEW IF EXISTS intermediate_step CASCADE;
+DROP VIEW IF EXISTS NationalCabinet CASCADE;
+DROP VIEW IF EXISTS ToCabinet CASCADE;
+DROP VIEW IF EXISTS NationalCabinetWithEnd CASCADE;
+DROP VIEW IF EXISTS PartyName CASCADE;
+DROP VIEW IF EXISTS CabinetPmKnown CASCADE;
 
 -- Define views for your intermediate steps here.
 
@@ -27,13 +32,13 @@ FROM cabinet JOIN country ON country.id = cabinet.country_id;
 
 -- pick up cabinetId to join with the correct cabinet
 CREATE VIEW ToCabinet AS
-SELECT politician_president.country_id AS CoID, cabinet_id AS cabinetId, end_date
+SELECT politician_president.country_id AS CoID, cabinet_id AS cabinetId, end_date, cabinet_party.party_id as party_id
 FROM  cabinet_party LEFT JOIN politician_president ON politician_president.party_id = cabinet_party.party_id;
 
 -- add end date to the view
 -- also add partyID for later joining the name of the party with PM
 CREATE VIEW NationalCabinetWithEnd AS
-SELECT countryName, NationalCabinet.cabinetId, startDate, end_date AS endDate, party_id AS partyID
+SELECT countryName, NationalCabinet.cabinetId, startDate, end_date AS endDate, ToCabinet.party_id AS partyID
 FROM NationalCabinet JOIN ToCabinet ON NationalCabinet.CoID = ToCabinet.CoID
                                     AND NationalCabinet.cabinetId = ToCabinet.cabinetId;
 

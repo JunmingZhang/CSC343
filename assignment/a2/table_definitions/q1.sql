@@ -25,7 +25,7 @@ DROP VIEW IF EXISTS avg_count CASCADE;
 DROP VIEW IF EXISTS max_date CASCADE;
 DROP VIEW IF EXISTS recentlyMost CASCADE;
 DROP VIEW IF EXISTS morethanThree CASCADE;
-DROP VIEW IF EXISTS recently_more_win_party CASCADE;\
+DROP VIEW IF EXISTS recently_more_win_party CASCADE;
 DROP VIEW IF EXISTS final_answer CASCADE;
 
 -- Define views for your intermediate steps here.

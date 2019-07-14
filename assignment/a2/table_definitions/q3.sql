@@ -54,7 +54,7 @@ SELECT co.name AS countryName, p.name AS partyName,
        pf.party_family AS partyFamily, pp.state_market AS stateMarket
 FROM commited JOIN country co ON commited.CoId = co.id
               JOIN party p ON commited.PId = p.id
-              LEFT JOIN party_family AS pf On commited.PId = pf.party_id
+              LEFT JOIN party_family pf On commited.PId = pf.party_id
               LEFT JOIN party_position pp ON commited.PId = pp.party_id;
 
 

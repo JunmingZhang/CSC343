@@ -18,19 +18,39 @@ DROP VIEW IF EXISTS intermediate_step CASCADE;
 
 -- Define views for your intermediate steps here.
 
-CREATE VIEW countryAndParty AS
-SELECT country.name AS countryName, party.name AS partyName, party.id AS PId
-FROM country JOIN ON party ON country.id = party.country_id;
+CREATE VIEW pastTwentyYearCabinets AS
+SELECT id AS CaId, country_id AS CoId
+FROM cabinet
+WHERE (extract(YEAR, start_date) >= 1999) AND (extract(YEAR, start_date) <= 2019);
 
-CREATE VIEW joinFamily AS
-SELECT countryName, partyName, family AS partyFamily, PId
-FROM countryAndParty LEFT JOIN party_family ON
-     countryAndParty.PId = party_family.party_id;
+CREATE VIEW allCombos AS
+SELECT CoId, party.id AS PId, CaId
+FROM pastTwentyYearCabinets JOIN party ON party.country_id = CoId;
 
-CREATE VIEW marketStatus AS
-SELECT countryName, partyName, partyFamily, state_market AS stateMarket, PId
-FROM joinFamily LEFT JOIN party_position ON
-     joinFamily.PId = party_position.party_id;
+CREATE VIEW inCabinet AS
+SELECT country_id AS CoId, party.id AS PId, cabinet_id AS CaId
+FROM cabinet_party cp JOIN party ON cp.party_id = party.id;
+
+CREATE VIEW notAlways AS
+(SELECT *
+FROM allCombos) EXCEPT
+(SELECT *
+FROM inCabinet);
+
+CREATE VIEW commited AS
+(SELECT country_id AS CoId, party.id AS PId
+FROM party) EXCEPT
+(SELECT CoId, PId
+FROM notAlways);
+
+CREATE VIEW answer AS
+SELECT co.name AS countryName, p.name AS partyName,
+       pf.party_family AS partyFamily, pp.state_market AS stateMarket
+FROM commited JOIN country co ON commited.CoId = co.id
+              JOIN party p ON commited.PId = p.id
+              LEFT JOIN party_family AS pf On commited.PId = pf.party_id
+              LEFT JOIN party_position pp ON commited.PId = pp.party_id;
+
 
 ---CREATE VIEW overTwenty AS
 ---SELECT countryName, partyName, partyFamily, state_market
@@ -40,6 +60,6 @@ FROM joinFamily LEFT JOIN party_position ON
 
 -- the answer to the query 
 insert into q3 (countryName, partyName, partyFamily, stateMarket) (
-       SELECT countryName, partyName, partyFamily, state_market
-       FROM marketStatus
+        SELECT countryName, partyName, partyFamily, stateMarket
+        FROM answer
 );

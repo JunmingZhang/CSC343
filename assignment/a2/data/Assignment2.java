@@ -53,9 +53,9 @@ public class Assignment2 extends JDBCSubmission {
 
             String sqlText = "SELECT el.id AS electionId, ca.id AS cabinetId " +
                              "FROM cabinet ca, election el, country co " +
-                             "WHERE el.id = ca.election_id AND " +
+                             "WHERE co.name = ? AND " +
                              "co.id = ca.country_id AND " +
-                             "co.name = ? " +
+                             "el.id = ca.election_id " +
                              "ORDER BY (EXTRACT(year FROM e_date)) DESC";
 
             PreparedStatement ps = connection.prepareStatement(queryString);

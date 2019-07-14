@@ -1,4 +1,4 @@
- SET search path TO parlgov
+SET search path TO parlgov
 
 SELECT *
 from q1

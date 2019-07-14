@@ -58,7 +58,7 @@ WHERE w.election_id = e.id
 GROUP BY w.party_id;
 
 CREATE VIEW recentlyMost as
-SELECT e.id as mostRecentlyWonElectionId, e.e_date as mostRecentlyWonElectionYear, e.party_id as party_id
+SELECT e.id as mostRecentlyWonElectionId, extract(year from e.e_date) as mostRecentlyWonElectionYear, e.party_id as party_id
 FROM max_date m, election e, win_party w
 WHERE e.id = w.election_id
 and m.e_date = e.e_date

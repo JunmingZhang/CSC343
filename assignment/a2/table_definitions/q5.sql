@@ -30,7 +30,7 @@ SELECT P1.CoID AS CoID, P1.partyID AS P1Id, P2.partyID AS P2Id, count(*) AS numP
 FROM PartyInCountry P1, PartyInCountry P2
 WHERE P1.ElectionId = P2.ElectionId AND
       P1.CoID = P2.CoID AND
-      P1.party_id < P2.party_id AND
+      P1.partyId < P2.partyId AND
       (P1.ERId = P2.AllianceId OR
        P2.ERId = P1.AllianceId OR
        P1.AllianceId = P2.AllianceId)

@@ -51,7 +51,7 @@ FROM notAlways);
 -- find the answer
 CREATE VIEW answer AS
 SELECT co.name AS countryName, p.name AS partyName,
-       pf.party_family AS partyFamily, pp.state_market AS stateMarket
+       pf.family AS partyFamily, pp.state_market AS stateMarket
 FROM commited JOIN country co ON commited.CoId = co.id
               JOIN party p ON commited.PId = p.id
               LEFT JOIN party_family pf ON commited.PId = pf.party_id

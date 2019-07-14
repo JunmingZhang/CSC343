@@ -22,7 +22,7 @@ DROP VIEW IF EXISTS intermediate_step CASCADE;
 CREATE VIEW pastTwentyYearCabinets AS
 SELECT id AS CaId, country_id AS CoId
 FROM cabinet
-WHERE (EXTRACT(YEAR, start_date) >= 1999) AND (EXTRACT(YEAR, start_date) <= 2019);
+WHERE (EXTRACT(YEAR FROM start_date) >= 1999) AND (EXTRACT(YEAR FROM start_date) <= 2019);
 
 -- find all combinations of parties in the cabinets
 CREATE VIEW allCombos AS

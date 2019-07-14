@@ -46,7 +46,7 @@ GROUP BY CoID;
 CREATE VIEW AllianceResult AS
 SELECT AP.CoID AS countryId, P1.P1Id AS alliedPartyId1, P2.P1Id AS alliedPartyId1
 FROM AlliancePairs AP JOIN numElections NE ON AP.CoID = NE.CoID
-WHERE numPairs / numElcs >= 0.3;
+WHERE CAST(numPairs AS float) / CAST(numElcs AS float) >= 0.3;
 
 -- the answer to the query 
 insert into q5 (countryId, alliedPartyId1, alliedPartyId1) (

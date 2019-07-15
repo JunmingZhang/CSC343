@@ -50,6 +50,12 @@ SELECT avg(wonElections) as avg_times, country_id
 FROM win_count
 GROUP BY country_id;
 
+CREATE VIEW morethanThree as
+SELECT w.wonElections as wonElections, w.partyId as party_id, w.partyName as partyName, w.country_id as country_id
+FROM win_count w, avg_count a
+WHERE w.country_id = a.country_id
+and w.wonElections > 3*a.avg_times;
+
 CREATE VIEW max_date AS
 SELECT max(e.e_date) AS recent_date, w.party_id as party_id
 FROM win_party w, election e
@@ -62,12 +68,6 @@ FROM max_date m, election e, win_party w
 WHERE e.id = w.election_id
 and m.recent_date = e.e_date
 and m.party_id = w.party_id;
-
-CREATE VIEW morethanThree as
-SELECT w.wonElections as wonElections, w.partyId as party_id, w.partyName as partyName, w.country_id as country_id
-FROM win_count w, avg_count a
-WHERE w.country_id = a.country_id
-and w.wonElections > 3*a.avg_times;
 
 CREATE VIEW recently_more_win_party as
 SELECT m.party_id as party_id, m.wonElections as wonElections, m.partyName as partyName, m.country_id as country_id, r.mostRecentlyWonElectionId as mostRecentlyWonElectionId, r.mostRecentlyWonElectionYear as mostRecentlyWonElectionYear

@@ -25,25 +25,24 @@ DROP VIEW IF EXISTS CabinetPmKnown CASCADE;
 -- Define views for your intermediate steps here.
 
 -- display countryNanme, cabinetId and startDate
--- also pick up countryID as coID for joining
 CREATE VIEW NationalCabinet AS
-SELECT country.id AS CoID, country.name AS countryName,
+SELECT country.name AS countryName,
        cabinet.id AS cabinetId, start_date AS startDate
 FROM cabinet JOIN country ON country.id = cabinet.country_id;
 
 -- pick up cabinetId to join with the correct cabinet
 CREATE VIEW ToCabinet AS
-SELECT politician_president.country_id AS CoID, cabinet_id AS cabinetId, end_date, cabinet_party.party_id as party_id
+SELECT cabinet_id AS cabinetId, end_date, cabinet_party.party_id as party_id
 FROM  cabinet_party LEFT JOIN politician_president ON politician_president.party_id = cabinet_party.party_id;
 
 -- add end date to the view
--- also add partyID for later joining the name of the party with PM
+-- end date of the previous cabinet is the start date of this cabinet
 CREATE VIEW NationalCabinetWithEnd AS
 SELECT countryName, NationalCabinet.cabinetId, startDate, cabinet.start_date AS endDate
 FROM NationalCabinet Left JOIN cabinet ON cabinet.previous_cabinet_id = cabinetID;
 
 -- find the name of the party fills the PM
--- also add partyID for later joining the name of the party with PM
+-- also add cabinetId for later joining the name of the party with PM
 CREATE VIEW PartyName AS
 SELECT party.name AS partyName, cabinet_id
 FROM cabinet_party, party

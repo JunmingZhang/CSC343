@@ -58,7 +58,7 @@ public class Assignment2 extends JDBCSubmission {
                              "el.id = ca.election_id " +
                              "ORDER BY (EXTRACT(year FROM e_date)) DESC";
 
-            PreparedStatement ps = connection.prepareStatement(queryString);
+            PreparedStatement ps = connection.prepareStatement(sqlText);
             ps.setString(1, countryName);
             ResultSet rs = ps.executeQuery();
 

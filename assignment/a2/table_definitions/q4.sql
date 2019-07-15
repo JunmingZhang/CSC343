@@ -40,7 +40,7 @@ FROM  cabinet_party LEFT JOIN politician_president ON politician_president.party
 -- also add partyID for later joining the name of the party with PM
 CREATE VIEW NationalCabinetWithEnd AS
 SELECT countryName, NationalCabinet.cabinetId, startDate, cabinet.start_date AS endDate
-FROM NationalCabinet LEFT JOIN cabinet ON cabinet.previous_cabinet_id = cabinetID;
+FROM NationalCabinet Left JOIN cabinet ON cabinet.previous_cabinet_id = cabinetID;
 
 -- find the name of the party fills the PM
 -- also add partyID for later joining the name of the party with PM

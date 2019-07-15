@@ -42,9 +42,8 @@ and v.election_id = e.election_id;
 
 CREATE VIEW win_count AS
 SELECT count(w.election_id) as wonElections, p.id as partyId, p.name as partyName, p.country_id AS country_id
-FROM win_party w, party p
-WHERE w.party_id = p.id
-GROUP BY p.id;
+FROM win_party w RIGHT JOIN party p on w.party_id = p.id
+GROUP BY p.id, country_id;
 
 CREATE VIEW avg_count AS
 SELECT avg(wonElections) as avg_times, country_id
@@ -71,18 +70,23 @@ WHERE w.country_id = a.country_id
 and w.wonElections > 3*a.avg_times;
 
 CREATE VIEW recently_more_win_party as
-SELECT party_id, wonElections, partyName, country_id, mostRecentlyWonElectionId, mostRecentlyWonElectionYear
-FROM morethanThree NATURAL JOIN recentlyMost;
+SELECT m.party_id as party_id, m.wonElections as wonElections, m.partyName as partyName, m.country_id as country_id, r.mostRecentlyWonElectionId as mostRecentlyWonElectionId, r.mostRecentlyWonElectionYear as mostRecentlyWonElectionYear
+FROM morethanThree m, recentlyMost r
+WHERE m.party_id = r.party_id;
 
-CREATE VIEW final_answer as
-SELECT c.name as countryName, r.party_id as partyName, p.family as partyFamily, r.wonElections as wonElections, r.mostRecentlyWonElectionId as mostRecentlyWonElectionId, r.mostRecentlyWonElectionYear as mostRecentlyWonElectionYear
-FROM recently_more_win_party r, country c, party_family p
-WHERE r.party_id = p.party_id
-and r.country_id = c.id;
+CREATE VIEW party_country as
+SELECT r.party_id as party_id, c.name as countryName, r.partyName as partyName, r.wonElections as wonElections, r.mostRecentlyWonElectionId as mostRecentlyWonElectionId, r.mostRecentlyWonElectionYear as mostRecentlyWonElectionYear
+FROM recently_more_win_party r, country c
+WHERE r.country_id = c.id;
+
+CREATE VIEW party_country_family as
+SELECT pc.countryName as countryName, pc.partyName as partyName, pf.family as partyFamily, pc.wonElections as wonElections, pc.mostRecentlyWonElectionId as mostRecentlyWonElectionId, pc.mostRecentlyWonElectionYear as mostRecentlyWonElectionYear
+FROM party_country pc LEFT JOIN party_family pf on pc.party_id = pf.party_id;
+
 
 -- the answer to the query 
 insert into q1
 SELECT *
-FROM final_answer;
+FROM party_country_family;
 
 

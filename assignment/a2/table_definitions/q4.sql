@@ -27,11 +27,9 @@ DROP VIEW IF EXISTS CabinetPmKnown CASCADE;
 -- display countryNanme, cabinetId and startDate
 -- also pick up countryID as coID for joining
 CREATE VIEW NationalCabinet AS
-
 SELECT country.id AS CoID, country.name AS countryName,
        cabinet.id AS cabinetId, start_date AS startDate
-FROM cabinet JOIN country ON country.id = cabinet.country_id
-             JOIN election ON country.id = election.country_id;
+FROM cabinet JOIN country ON country.id = cabinet.country_id;
 
 -- pick up cabinetId to join with the correct cabinet
 CREATE VIEW ToCabinet AS

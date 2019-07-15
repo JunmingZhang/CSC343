@@ -27,6 +27,12 @@ DROP VIEW IF EXISTS CabinetPmKnown CASCADE;
 -- display countryNanme, cabinetId and startDate
 -- also pick up countryID as coID for joining
 CREATE VIEW NationalCabinet AS
+<<<<<<< HEAD
+SELECT country.id AS CoID, country.name AS countryName,
+       cabinet.id AS cabinetId, start_date AS startDate
+FROM cabinet JOIN country ON country.id = cabinet.country_id
+             JOIN election ON country.id = election.country_id;
+=======
 SELECT country.id AS CoID, country.name AS countryName, cabinet.id AS cabinetId, start_date AS startDate
 FROM cabinet JOIN country ON country.id = cabinet.country_id;
 
@@ -34,13 +40,19 @@ FROM cabinet JOIN country ON country.id = cabinet.country_id;
 CREATE VIEW ToCabinet AS
 SELECT politician_president.country_id AS CoID, cabinet_id AS cabinetId, end_date, cabinet_party.party_id as party_id
 FROM  cabinet_party LEFT JOIN politician_president ON politician_president.party_id = cabinet_party.party_id;
+>>>>>>> e1bf9cc027753db681b1c38412b20edee0f9cb6d
 
 -- add end date to the view
 -- also add partyID for later joining the name of the party with PM
 CREATE VIEW NationalCabinetWithEnd AS
+<<<<<<< HEAD
+SELECT countryName, NationalCabinet.cabinetId, startDate, cabinet.start_date AS endDate, party_id AS partyID
+FROM NationalCabinet RIGHT JOIN cabinet ON cabinet.previous_cabinet_id = cabinetID;
+=======
 SELECT countryName, NationalCabinet.cabinetId, startDate, end_date AS endDate, ToCabinet.party_id AS partyID
 FROM NationalCabinet JOIN ToCabinet ON NationalCabinet.CoID = ToCabinet.CoID
                                     AND NationalCabinet.cabinetId = ToCabinet.cabinetId;
+>>>>>>> e1bf9cc027753db681b1c38412b20edee0f9cb6d
 
 -- find the name of the party fills the PM
 -- also add partyID for later joining the name of the party with PM

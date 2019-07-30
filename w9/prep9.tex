@@ -1,0 +1,110 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+
+\usepackage{array}
+\usepackage{wrapfig}
+\usepackage{multirow}
+\usepackage{tabu}
+
+\usepackage{amsmath}
+
+\usepackage{geometry}   %设置页边距的宏包
+\geometry{left=3cm,right=3cm,top=2.5cm,bottom=2.5cm}  %设置 上、左、下、右 页边距
+
+\usepackage{colortbl}
+
+\newtcolorbox{mybox}{colback = white, colframe = blue!75!white}
+
+\title{CSC343 Prep 9}
+\author{Junming Zhang}
+\date{July 2019}
+
+\begin{document}
+
+\maketitle
+\noindent
+{\color{red} \rule{\linewidth}{0.25mm} }
+
+\begin{enumerate}
+    \item Suppose we have a relation on attributes $A, B, C, D, E,$ and $F$ , and these functional dependencies hold: $S=\{B \rightarrow DE, BF \rightarrow C, CF \rightarrow B, DF \rightarrow AE\}$.
+    \begin{enumerate}
+        \item Compute $B^+$.
+        \[\textcolor{blue}{B^+ = BDE}\]
+        \item Compute $CF^+$.
+        \[\textcolor{blue}{CF^+ = ABCDEF}\]
+        \item Compute $DF^+$.
+        \[\textcolor{blue}{DF^+ = ADEF}\]
+        \item Compute $BC^+$.
+        \[\textcolor{blue}{BC^+ = BCDE}\]
+        \item Compute $ABC^+$.
+        \[\textcolor{blue}{ABC^+ = ABCDE}\]
+    \end{enumerate}
+    
+    \item Again, suppose we have a relation on attributes $A,B,C,D,E$, and $F$,and these functional dependencies hold: $S = \{B \rightarrow DE, BF \rightarrow C, CF \rightarrow B, DF \rightarrow AE\}$.
+    \\Write “yes” or “no” for each, and show your rough work.
+    \begin{enumerate}
+        \item Does it follow from $S$ that $B \rightarrow A$?
+        \\
+        \textcolor{blue}{No, because $B^+$ does not include $A$ from $Q1$ part $(a)$.}
+        \item Does it follow from $S$ that $CF \rightarrow E$?
+        \\
+        \textcolor{blue}{Yes, because $CF^+$ includes $E$ from $Q1$ part $(b)$.}
+        \item Does it follow from $S$ that $DF \rightarrow B$?
+        \\
+        \textcolor{blue}{No, because $DF+$ does not include $B$ from $Q1$ part $(c)$.}
+        \item Does it follow from $S$ that $BD \rightarrow C$?
+        \\
+        \textcolor{blue}{The closure of $BD$ can be derived from the functional dependencies given, which is}
+        \[\textcolor{blue}{BD^+ = BDE.}\]
+        \textcolor{blue}{No, C can not be derived from $BD^+$ since $BD^+$ does not include $C$.}
+        \item Does it follow from $S$ that $BFC \rightarrow A$?
+        \\
+        \textcolor{blue}{The closure of $BFC$ can be derived from the functional dependencies given, which is}
+        \[\textcolor{blue}{BFC^+ = ABCDEF.}\]
+        \textcolor{blue}{Yes, A can be derived from $BFC^+$ since $BFC^+$ includes $A$.}
+    \end{enumerate}
+    \item Suppose we have a relation with attributes $ABCDE$ and these functional dependencies: $S = \{ A \rightarrow D, B \rightarrow A, C \rightarrow A, D \rightarrow CE. \}$ Project the functional dependencies onto the attribute set $ABD$.
+    \\
+    \begin{mybox}
+    \textcolor{blue}{By the algorithm introduced in the lecture, compute $A^+, B^+, D^+$ at first, which is,}
+    \begin{gather*}
+        \textcolor{blue}{A^+ = ACDE}\\
+        \textcolor{blue}{B^+ = ABCDE}\\
+        \textcolor{blue}{D^+ = ACDE}
+    \end{gather*}
+    \textcolor{blue}{Therefore, the aimed dependencies are computed, }
+    \begin{gather*}
+        \textcolor{blue}{A \rightarrow D}\\
+        \textcolor{blue}{B \rightarrow AD}\\
+        \textcolor{blue}{D \rightarrow A}
+    \end{gather*}
+    \textcolor{blue}{Since $B$ determines all behaviors of $A, B$ and $D$ by $B^+$, there is no need to consider any superset with $B$. Also,}
+    \[\textcolor{blue}{AD^+ = ACDE,}\]
+    \textcolor{blue}{which does not contribute any new functional dependencies on attributes $A, B$, and $D$.}\\
+    \textcolor{blue}{Finally, the projection is solved as,}
+    \[\textcolor{blue}{\{A \rightarrow D, B \rightarrow AD, D \rightarrow A\}.}\]
+    \end{mybox}
+
+    \item Consider relation $R(A, B, C, D, E, F )$ with functional dependencies: \[S = \{CD \rightarrow A, B \rightarrow EF, A \rightarrow BC, F \rightarrow D\}\]
+    Create an instance of $R$ that satisfies its FDs and has redundant data. Identify redundancy by circling a single value in the table that could be erased and yet we would know what its value \textit{must} be. Thought exercise: what does it have to do with the FDs?
+    
+        \begin{table}[h!]
+        \centering
+        \color{blue}\begin{tabular}{|| c || c || c || c || c || c||} 
+        \arrayrulecolor{blue}\hline
+        A & B & C & D & E & F \\ [0.5ex] 
+        \arrayrulecolor{blue}\hline
+        \arrayrulecolor{blue}\hline
+        1 & 2 & 3 & 4 & 5 & 6\\ 
+        \arrayrulecolor{blue}\hline
+        3 & 5 & 2 & \fcolorbox{red}{white}{4} & 1 & 6  \\ [1ex] 
+        \arrayrulecolor{blue}\hline
+        \end{tabular}
+        \end{table}
+    
+\end{enumerate}
+
+\end{document}

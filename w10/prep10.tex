@@ -1,0 +1,168 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{enumitem}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+
+\usepackage{array}
+\usepackage{wrapfig}
+\usepackage{multirow}
+\usepackage{tabu}
+\usepackage{colortbl}
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage{geometry}   %设置页边距的宏包
+\geometry{left=3cm,right=3cm,top=2.5cm,bottom=2.5cm}  %设置 上、左、下、右 页边距
+
+
+\title{CSC343 Prep 10}
+\author{Junming Zhang}
+\date{July 2019}
+
+\begin{document}
+
+\maketitle
+\noindent
+{\color{red} \rule{\linewidth}{0.25mm} }
+
+\begin{enumerate}
+    \item Consider relation $R(A, B, C, D, E, F)$ with functional dependencies $S$.
+    \[S=\{CD \rightarrow A, B \rightarrow EF, A \rightarrow BC, F \rightarrow D\}\]
+    
+    \begin{enumerate}
+        \item Which functional dependencies indicate a violation of BCNF?
+        \\
+        \textcolor{blue}{Apply closure test to check if there is any LHS of a FD not a superkey.}
+        \begin{gather*}
+            \textcolor{blue}{CD^+ = ABCDEF}\\
+            \textcolor{blue}{B^+ = BDEF}\\
+            \textcolor{blue}{A^+ = ABCDEF}\\
+            \textcolor{blue}{F^+ = DF}
+        \end{gather*}
+        \textcolor{blue}{Therefore, FDs $B \rightarrow EF$ and $F \rightarrow D$ violate BCNF.}
+        
+        \item Create an instance of $R$ that satisfies its FDs and has redundant data. Identify the redundancy, and explain what it has to do with the FDs.
+        \\
+        \begin{table}[h!]
+        \centering
+        \color{blue}\begin{tabular}{|| c || c || c || c || c || c ||} 
+        \arrayrulecolor{blue}\hline
+        A & B & C & D & E & F \\ [0.5ex] 
+        \arrayrulecolor{blue}\hline
+        \arrayrulecolor{blue}\hline
+        1 & 2 & 3 & 4 & 5 & 6 \\
+        \arrayrulecolor{blue}\hline
+        7 & 8 & 9 & 4 & 10 & 6 \\ [1ex]
+        \arrayrulecolor{blue}\hline
+        \end{tabular}
+        \end{table}
+        
+        \textcolor{blue}{Here is an instance of relation that satisfies all the FDs. Note from the
+        FD $F \rightarrow D$, if two tuples share the same value for $F$, then they have the same value on D. The duplicates are allowed since the closure $F^+$ does not cover all the attributes in this relation (so as $B^+$), which means there might be a redundancy.}
+        
+        \item Suppose we use the functional dependency $B \rightarrow EF$ in the first step of the BCNF decomposition algorithm to decompose $R$. What two new relations will replace $R$?
+        \\
+        \begin{gather*}
+            \textcolor{blue}{R_1(B, D, E, F)}\\
+            \textcolor{blue}{R_2(A, B, C)}
+        \end{gather*}
+        \item Project the FDs onto these two relations.
+        \\
+        \begin{itemize}[label=\textcolor{blue}{\textbullet}]
+            \item \textcolor{blue}{Step 1. } \textcolor{blue}{Find closures of attributes in $R_1$ that yield valid FDs.}\\
+            \textcolor{blue}{Result: }
+            \begin{gather*}
+                \textcolor{blue}{B^+ = BDEF}\\
+                \textcolor{blue}{F^+ = FD}
+            \end{gather*}
+            
+            \item \textcolor{blue}{Step 2. } \textcolor{blue}{Project FDs in the relation $R_1$ by closures found in step 1.}\\
+            \textcolor{blue}{Result: }
+            \begin{gather*}
+                \textcolor{blue}{B \rightarrow DEF}\\
+                \textcolor{blue}{F \rightarrow D}
+            \end{gather*}
+            
+            \item \textcolor{blue}{Step 3. } \textcolor{blue}{List the set of projections in $R_1$.}
+            \\
+            \textcolor{blue}{Result: }
+            \textcolor{blue}{\{B \rightarrow DEF, F\rightarrow D\}}\\
+            
+            \item \textcolor{blue}{Step 4. } \textcolor{blue}{Find closures of attributes in $R_2$ that yield valid FDs.}\\
+            \textcolor{blue}{Result: }
+            \begin{gather*}
+                \textcolor{blue}{A^+ = ABCDEF}\\
+                \textcolor{blue}{B^+ = BDEF}\\
+                \shortintertext{\textcolor{blue}{since $CD^+ = ABCDEF$, attribute $C \in R_2$, add C to B, then}}
+                \textcolor{blue}{BC^+ = ABCDEF}
+            \end{gather*}
+            
+            \item \textcolor{blue}{Step 5. } \textcolor{blue}{Project FDs in the relation $R_2$ by closures found in step 4.}\\
+            \textcolor{blue}{Result: }
+            \begin{gather*}
+                \textcolor{blue}{A \rightarrow BC}\\
+                \textcolor{blue}{BC \rightarrow A}
+            \end{gather*}
+            
+             \item \textcolor{blue}{Step 6. } \textcolor{blue}{List the set of projections in $R_2$.}
+            \\
+            \textcolor{blue}{Result: }
+            \textcolor{blue}{\{A\rightarrow BC, BC \rightarrow A\}}\\
+            
+        \end{itemize}
+        
+        \item Is the new schema, with these two relations, in BCNF, or would we have to recurse and continue decomposing?\\
+        \textcolor{blue}{The schema for the relation $R_1$ is not in BCNF and needs to be further decomposed, becuase the FD $F \rightarrow D$ violates BCNF (not a superkey). However, $R_2$ does not need to be further decomposed since every FD in $R_2$ is a superkey.}
+    \end{enumerate}
+    
+    \item Suppose we are employing the 3NF synthesis algorithm on a relation $R(A, B, C, D, E)$, and we already have the following minimal basis:
+    \[S=\{A \rightarrow DE, C \rightarrow A, E \rightarrow A\}\]
+    
+    \begin{enumerate}
+        \item List all the keys for relation $R$
+        \\
+        \textcolor{blue}{The only key is BC.}
+        \item How do you know that nothing else is a key?
+        \\
+        \textcolor{blue}{Initially, list the closures which lead to valid FDs in the relation R, which are: }
+        \begin{gather*}
+            \textcolor{blue}{A^+ = ADE}\\
+            \textcolor{blue}{C^+ = ACDE}\\
+            \textcolor{blue}{E^+ = ADE.}
+        \end{gather*}
+        \textcolor{blue}{From all closures shown above, notice that only if B is added to C there is a minimal superkey, which is a key for a relation.
+        \[BC^+ = ABCDE \quad \text{\# derived from $C^+$}\]
+        Addition of B to any other attribute except C does not yield a minimal superkey (or a key), seen from the closures listed above. Also, since B is not determined by any other attribute in R, B must be a part of a key. Therefore, BC is the only key (minimal superkey) and there is nothing else a key.}
+        \item Show the final schema produced by the 3NF algorithm. Explain your answer in terms of the steps of the algorithm. Do not project the functional dependencies onto the relations, just show the relations.
+        \\
+        \begin{itemize}[label=\textcolor{blue}{\textbullet}]
+            \item \textcolor{blue}{Step 1. } \textcolor{blue}{Verify if S is a minimal basis (The fact that S is a minimal basis is given).}\\
+            
+            \item \textcolor{blue}{Step 2. } \textcolor{blue}{Union X, Y for each $X \rightarrow Y \in S$ to define a new relation.}\\
+            \textcolor{blue}{Result: }
+            \begin{gather*}
+                \textcolor{blue}{R_1(A, D, E)}\\
+                \textcolor{blue}{R_2(A, C)}\\
+                \textcolor{blue}{R_3(A, E)}
+            \end{gather*}
+            \textcolor{blue}{Also, delete $R_3$ since all attributes in $R_3$ occur in $R_1$ and $R_1$ contains more attributes than $R_3$.}\\
+            
+            \item \textcolor{blue}{Step 3. } \textcolor{blue}{Check if there is any new relation a superkey for relation R, if not, add a relation with a schema as a key for the relation R.}\\
+            \textcolor{blue}{Result: }
+            \textcolor{blue}{There is no relation a superkey for R. Since BC is a key for R, add a new relation $R_4(B, C)$.}\\
+            \item \textcolor{blue}{Step 4. } \textcolor{blue}{Return the final schema produced by the 3NF algorithm.}\\
+            \textcolor{blue}{Result: } \textcolor{blue}{The final schema returned by this algorithm is: }
+            \begin{gather*}
+                \textcolor{blue}{R_1(A, D, E)}\\
+                \textcolor{blue}{R_2(A, C)}\\
+                \textcolor{blue}{R_4(B, C).}
+            \end{gather*}
+        \end{itemize}
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}

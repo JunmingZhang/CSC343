@@ -1,0 +1,157 @@
+\documentclass{article}
+\usepackage{fullpage}
+\usepackage[normalem]{ulem}
+\usepackage{amstext}
+\usepackage{amsmath}
+\newcommand{\var}[1]{\mathit{#1}}
+\setlength{\parskip}{6pt}
+
+\begin{document}
+
+\noindent
+University of Toronto\\
+{\sc csc}343, Summer 2019\\[10pt]
+{\LARGE\bf Assignment 1: Name(s) and student number(s) here} \\[10pt]
+
+\noindent
+Unary operators on relations:
+\begin{itemize}
+\item $\Pi_{x, y, z} (R)$
+\item $\sigma_{condition} (R) $
+\item $\rho_{New} (R) $
+\item $\rho_{New(a, b, c)} (R) $
+\end{itemize}
+Binary operators on relations:
+\begin{itemize}
+\item $R \times S$
+\item $R \bowtie S$
+\item $R \bowtie_{condition} S$
+\item $R \cup S$
+\item $R \cap S$
+\item $R - S$
+\end{itemize}
+Logical operators:
+\begin{itemize}
+\item $\vee$
+\item $\wedge$
+\item $\neg$
+\end{itemize}
+Assignment:
+\begin{itemize}
+\item $New(a, b, c) := R$
+\end{itemize}
+Stacked subscripts:
+\begin{itemize}
+\item
+$\sigma_{\substack{this.something > that.something \wedge \\ this.otherthing \leq that.otherthing}}$
+\end{itemize}
+
+\noindent
+Below is the text of the assignment questions; we suggest you include it in your solution.
+We have also included a nonsense example of how a query might look in LaTeX.  
+We used \verb|\var| in a couple of places to show what that looks like.  
+If you leave it out, most of the time the algebra looks okay, but certain words,
+{\it e.g.}, ``Offer" look horrific without it.
+
+The characters ``\verb|\\|" create a line break and ``[5pt]" puts in 
+five points of extra vertical space.  The algebra is easier to read with extra
+vertical space.
+We chose ``--" to indicate comments, and added less vertical space between comments
+and the algebra they pertain to than between steps in the algebra.
+This helps the comments visually stick to the algebra.
+
+
+%----------------------------------------------------------------------------------------------------------------------
+\section*{Part 1: Queries}
+
+\begin{enumerate}
+
+\item   % ----------
+Report the name of the Patron that has given the highest rating to a restaurant.  If there are ties, report all of them.  \\
+
+{\large %This increase in font size makes the subscripts much more readable.
+-- sID has a grade of at least 85. \\[5pt]
+$
+HaveHighGrade(\var{sID}) := 
+	\Pi_{sID} 
+	\sigma_{grade \ge 85} 
+	Took \\[10pt]
+$
+-- sID passed a course taught by Atwood. \\[5pt]
+$
+PassedAtwood(\var{sID}) := 
+	\Pi_{\var{sID}} 
+	\sigma_{instructor := ``Atwood" \wedge grade \ge 50} 
+	(Took \bowtie \var{Offering}) 
+	\\[10pt]
+$
+-- sID got 100 at least twice. \\[5pt]
+$
+AtLeastTwice(\var{sID}) := \\[5pt]  %This RA statement is too long, so we break it into two lines.
+	\hspace*{1cm}  % This command creates an indentation
+	\Pi_{T1.\var{sID}} 
+	\sigma_{
+		T1.\var{oID} \neq T2.\var{oID} \wedge 
+		T1.\var{sID} = T2.\var{sID} \wedge 
+		T1.grade = 100 \wedge T2.grade = 100}
+	[ (\rho_{T1}Took) \times (\rho_{T2}Took) ] \\[5pt]
+$
+} % End of font size increase.
+
+
+\item   % ----------
+Report the name of the restaurant for which the highest number of reservations were made. If there are ties report all of them.
+
+\item   % ----------	
+Report the PID(s) of the Patrons(s) who reserved a spot at a restaurant, but did not order anything.
+
+\item   % ---------- 
+Report the name(s) of the Patrons(s) who have made a reservation to the restaurant\\ named `Boston Pizza' and ordered 3 of a dish called 'Margherita Pizza'.
+
+\item   % ----------
+Report the owner of the restaurant with the highest average rating. If there are ties, report all of them.
+
+\item   % ----------
+Report the capacities of the restaurants from which patrons have so far only ordered foods with a `gluten-free' dietary restriction.
+
+\item   % ----------
+Report the restaurant owner for which the very earliest reservation out of all the reservations in the database was made.  Report any ties.
+
+\item   % ----------
+Report the PID(s) of the Patrons who have made reservations to the restaurant named `Red Lobster' on their birthday.
+
+\item   % ----------
+Consider all patrons that have made reservations to at least two different restaurants. For each of those patrons, report their name, and the names and ratings of all of the restaurants they went to (not ones they rated without actually going to).
+
+\item   % ----------
+Report the name of all Restaurants that had reservations made on every day that someone made a reservation at the restaurant named `Pickle Barrel'.
+
+\end{enumerate}
+
+
+
+%----------------------------------------------------------------------------------------------------------------------
+\section*{Part 2: Integrity Constraints}
+
+
+Express the following integrity constraints
+with the notation $R = \emptyset$, where $R$ is an expression of relational algebra. 
+You are welcome to define intermediate results with assignment
+and then use them in an integrity constraint.
+
+\begin{enumerate}
+
+\item   % ----------
+A restaurant owner can only own one restaurant.
+
+\item %---------
+Patrons who did not make a reservation for a restaurant cannot review it.
+
+\item %----------
+A Patron cannot make multiple reservations in one day for a restaurant that has a capacity less than 100.
+
+\end{enumerate}
+
+\end{document}
+
+

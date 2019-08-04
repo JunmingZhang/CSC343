@@ -1,0 +1,51 @@
+b2220-08:~/CSC343A3schema$ ssh fanyuch1@dbsrv1.teach.cs.toronto.edu
+    Type "faq" to view FAQ, and "rules" to view usage policy.
+    Report system problems by sending email to <sysadmin@teach.cs.toronto.edu>.
+
+The Teaching Labs are: BA2200 BA2210 BA2220 BA2270 BA3175 BA3195 BA3200
+
+This is a shared Linux system. By using this system, you acknowledge that
+some information about your computer account (e.g. login name, process data,
+etc.) will be available to other users sharing this system, in ways 
+typical of shared Linux systems.  
+
+Last login: Sat Aug  3 22:10:42 2019 from b2220-08.teach.cs.toronto.edu
+dbsrv1:~$ ls
+CSC209          CSC384       StudioProjects
+CSC263          Desktop      Thank You for your New Costco Membership.pdf
+CSC343          Downloads    Thunderbird_Folders
+CSC343A3schema  module1.pdf  tracking
+csc343db        R
+dbsrv1:~$ cd CSC343A3*
+dbsrv1:~/CSC343A3schema$ psql csc343h-fanyuch1
+psql (9.5.18)
+Type "help" for help.
+
+csc343h-fanyuch1=> \i fruits.ddl
+psql:fruits.ddl:1: NOTICE:  drop cascades to 6 other objects
+DETAIL:  drop cascades to table fruits.stores
+drop cascades to table fruits.loyality_cards
+drop cascades to table fruits.beverages
+drop cascades to table fruits.inventory
+drop cascades to table fruits.transactioninfo
+drop cascades to table fruits.transactionsofstore
+DROP SCHEMA
+CREATE SCHEMA
+SET
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 6
+INSERT 0 8
+INSERT 0 15
+INSERT 0 17
+INSERT 0 14
+INSERT 0 48
+csc343h-fanyuch1=> SELECT * FROM beverages;
+csc343h-fanyuch1=> \q
+dbsrv1:~/CSC343A3schema$ exit
+logout
+Connection to dbsrv1.teach.cs.toronto.edu closed.

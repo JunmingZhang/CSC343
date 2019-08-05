@@ -551,6 +551,51 @@ beverage\_regular\_calories & beverage\_large\_calories & amount \\
         %type 4(f) here
         Our schema is in the file \texttt{fruits.ddl} with some insertions for our demo,\\
         and the demo is in the file \texttt{fruits-demo.txt}.
+        \\
+        \\
+        \textbf{Description on all constraints: }
+        \begin{itemize}
+            \item \textsc{Stores}
+            \begin{itemize}
+                \item \texttt{not null:} a store should have a city, phone\_number and manager, thus we think they should not be null.
+                \item \texttt{oneCityOnly:} each store is in only one city, thus check for uniqueness of city.
+            \end{itemize}
+            
+            \item \textsc{Loyality\_Cards}
+             \begin{itemize}
+                 \item \texttt{not null:} card\_home\_store and number\_of\_tran\_in\_card are not null since for each loyality\_card, the store which they go most often to get the card and how many transactions (how often) this card is used must be recorded to get the card.
+                 \item \texttt{storeOfCard:} reference the home store to the info of the store.
+             \end{itemize}
+             
+            \item \textsc{Beverages}
+            \begin{itemize}
+                \item \texttt{not null:} name\_of\_beverage\_sold, beverage\_regular\_calories, beverage\_large\_calories,\\ beverage\_regular\_stock, beverage\_large\_stock are not null, since these are basic data of a beverage type and used to tell the name of a beverage and distinguish regular and large beverage.
+                \item \texttt{twoHundredMore:} the calories of the same type large size beverage is 200 more than regular one.
+                \item \texttt{oneName:} each beverage involves one name.
+            \end{itemize}
+            
+            \item \textsc{Inventory}
+            \begin{itemize}
+                \item \texttt{not null:} beverage\_id and amount should not be null since if there is a store, some beverages should be stocked in some amount.
+                \item \texttt{oneInventoryOneStore:} one store has one store\_id in this table.
+                \item \texttt{oneStockOnebeverage:} one beverage has one number.
+            \end{itemize}
+            
+            \item \textsc{TransactionInfo}
+            \begin{itemize}
+                \item \texttt{not null:} beverage\_id should not be null because there is always some beverage sold per transaction.
+                \item \texttt{cardUsed:} the loyality card used in transaction if applicable, reference it to the info of a loyality\_card.
+                \item \texttt{beverageInTransaction:} reference the beverage sold in this transaction to the info of a beverage.
+            \end{itemize}
+            
+            \item \textsc{TransactionsOfStore}
+            \begin{itemize}
+                \item \texttt{not null:} the foreign key reference store\_id is not null, because one transaction must happen in a store.
+                \item \texttt{validTransaction:} reference a valid transaction to the transactionInfo table to find info about the transaction.
+                \item \texttt{validStore:} reference the store of the transaction to the stores table to find info about the store of this transaction.
+            \end{itemize}
+            
+        \end{itemize}
         \end{mdframed}
         
     \end{enumerate}

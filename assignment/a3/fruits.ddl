@@ -44,11 +44,13 @@ CREATE TABLE beverages(
 );
 
 -- the inventory of fruits
+-- description of not null: beverage_id and amount should not be null
+-- since if there is a store, some beverages should be stocked in some amount
 CREATE TABLE Inventory(
     store_id INT, -- id of the store
     beverage_id INT NOT NULL, -- the id of beverage
     amount INT NOT NULL, -- the amount of fruits left
-    constraint oneInventoryOneStore -- the stock_is is store id
+    constraint oneInventoryOneStore -- one store has one store_id in this table
         foreign key (store_id) REFERENCES stores,
     constraint oneStockOnebeverage -- one beverage has one number
         foreign key (beverage_id) REFERENCES beverages
@@ -57,6 +59,8 @@ CREATE TABLE Inventory(
 -- the transaction made to buy a beverage
 -- the beverage_sold_id is not null since
 -- every sold beverage must be known
+-- description of not null: beverage_id should not be null because there
+-- is always some beverage sold per transaction
 CREATE TABLE transactionInfo(
     transaction_id INT primary key, -- id of the transaction
     tran_date DATE, -- the date of transaction

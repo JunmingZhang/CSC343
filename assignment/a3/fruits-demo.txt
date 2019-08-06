@@ -1,4 +1,4 @@
-b2220-08:~/CSC343A3schema$ ssh fanyuch1@dbsrv1.teach.cs.toronto.edu
+b2220-10:~/CSC343$ ssh zhan4662@dbsrv1.teach.cs.toronto.edu
     Type "faq" to view FAQ, and "rules" to view usage policy.
     Report system problems by sending email to <sysadmin@teach.cs.toronto.edu>.
 
@@ -9,19 +9,17 @@ some information about your computer account (e.g. login name, process data,
 etc.) will be available to other users sharing this system, in ways 
 typical of shared Linux systems.  
 
-Last login: Sat Aug  3 22:10:42 2019 from b2220-08.teach.cs.toronto.edu
+Last login: Mon Aug  5 20:04:03 2019 from b2220-10.teach.cs.toronto.edu
 dbsrv1:~$ ls
-CSC209          CSC384       StudioProjects
-CSC263          Desktop      Thank You for your New Costco Membership.pdf
-CSC343          Downloads    Thunderbird_Folders
-CSC343A3schema  module1.pdf  tracking
-csc343db        R
-dbsrv1:~$ cd CSC343A3*
-dbsrv1:~/CSC343A3schema$ psql csc343h-fanyuch1
+A1  a2  a3  a4  Android  csc209  CSC343  csc343db  CSC384  Desktop  Downloads  JDBC_exercise  mozilla.pdf  multiagent  prep6_queries.txt  R  Test1_May2018.pdf  Thunderbird_Folders  world_empty.sql  zhan4662
+dbsrv1:~$ cd CSC343/assignment/a3
+dbsrv1:~/CSC343/assignment/a3$ ls
+a3_handout.pdf  A3.pdf  A3.tex  fruits.ddl  fruits-demo.txt
+dbsrv1:~/CSC343/assignment/a3$ psql csc343h-zhan4662
 psql (9.5.18)
 Type "help" for help.
 
-csc343h-fanyuch1=> \i fruits.ddl
+csc343h-zhan4662=> \i fruits.ddl
 psql:fruits.ddl:1: NOTICE:  drop cascades to 6 other objects
 DETAIL:  drop cascades to table fruits.stores
 drop cascades to table fruits.loyality_cards
@@ -44,8 +42,158 @@ INSERT 0 15
 INSERT 0 17
 INSERT 0 14
 INSERT 0 48
-csc343h-fanyuch1=> SELECT * FROM beverages;
-csc343h-fanyuch1=> \q
-dbsrv1:~/CSC343A3schema$ exit
+csc343h-zhan4662=> \d
+                List of relations
+ Schema |        Name         | Type  |  Owner   
+--------+---------------------+-------+----------
+ fruits | beverages           | table | zhan4662
+ fruits | inventory           | table | zhan4662
+ fruits | loyality_cards      | table | zhan4662
+ fruits | stores              | table | zhan4662
+ fruits | transactioninfo     | table | zhan4662
+ fruits | transactionsofstore | table | zhan4662
+(6 rows)
+
+csc343h-zhan4662=> SELECT * from beverages;
+ beverage_id | name_of_beverage_sold | beverage_regular_calories | beverage_large_calories 
+-------------+-----------------------+---------------------------+-------------------------
+         111 | Apple                 |                       200 |                     400
+         222 | Banada                |                       300 |                     500
+         333 | Cherry                |                       150 |                     350
+         444 | Orange                |                       100 |                     300
+         555 | Watermelon            |                       450 |                     650
+         666 | Peach                 |                       310 |                     510
+         777 | Blueberry             |                       100 |                     300
+         888 | Mango                 |                       200 |                     400
+(8 rows)
+
+csc343h-zhan4662=> SELECT * from inventory;
+ store_id | beverage_id | amount 
+----------+-------------+--------
+        1 |         111 |     11
+        1 |         222 |     12
+        1 |         333 |     13
+        1 |         444 |     14
+        1 |         555 |     15
+        1 |         666 |     16
+        1 |         777 |     17
+        1 |         888 |     18
+        2 |         111 |     21
+        2 |         222 |     22
+        2 |         333 |     23
+        2 |         444 |     24
+        2 |         555 |     25
+        2 |         666 |     26
+        2 |         777 |     27
+        2 |         888 |     28
+        3 |         111 |     31
+        3 |         222 |     32
+        3 |         333 |     33
+        3 |         444 |     34
+        3 |         555 |     35
+        3 |         666 |     36
+        3 |         777 |     37
+        3 |         888 |     38
+        4 |         111 |     41
+        4 |         222 |     42
+        4 |         333 |     43
+        4 |         444 |     44
+        4 |         555 |     45
+        4 |         666 |     46
+        4 |         777 |     47
+        4 |         888 |     48
+        5 |         111 |     51
+        5 |         222 |     52
+        5 |         333 |     53
+        5 |         444 |     54
+        5 |         555 |     55
+        5 |         666 |     56
+        5 |         777 |     57
+        5 |         888 |     58
+        6 |         111 |     61
+        6 |         222 |     62
+        6 |         333 |     63
+        6 |         444 |     64
+        6 |         555 |     65
+        6 |         666 |     66
+        6 |         777 |     67
+        6 |         888 |     68
+(48 rows)
+
+csc343h-zhan4662=> SELECT * from loyality_cards;
+ loyality_card_id | card_home_store | number_of_tran_in_card 
+------------------+-----------------+------------------------
+                1 |               1 |                     10
+                2 |               2 |                     20
+                3 |               5 |                     10
+                4 |               1 |                     15
+                5 |               6 |                     11
+                6 |               1 |                      2
+                7 |               1 |                     13
+                8 |               5 |                     40
+                9 |               1 |                     25
+               10 |               4 |                     34
+               11 |               1 |                     89
+               12 |               3 |                     67
+               13 |               6 |                     56
+               14 |               4 |                     91
+               15 |               3 |                     34
+(15 rows)
+
+csc343h-zhan4662=> SELECT * from stores;
+ store_id |   city    | phone_number | manager 
+----------+-----------+--------------+---------
+        1 | Toronto   |         1111 | Peter
+        2 | Vancouver |         2222 | Peter
+        3 | Ottawa    |         3333 | Daniel
+        4 | Shanghai  |         6666 | James
+        5 | Montreal  |         7777 | Daniel
+        6 | Beijing   |         4444 | James
+(6 rows)
+
+csc343h-zhan4662=> SELECT * from transactioninfo;
+ transaction_id | tran_date  | tran_price | loyality_card_id | beverage_id 
+----------------+------------+------------+------------------+-------------
+              1 | 2018-01-01 |         10 |                  |         111
+              2 | 2018-02-01 |         20 |                1 |         222
+              3 | 2018-03-01 |         30 |                  |         888
+              4 | 2018-04-01 |         40 |                4 |         333
+              5 | 2018-05-01 |         50 |                  |         111
+              6 | 2018-06-01 |         60 |                5 |         555
+              7 | 2018-07-01 |         70 |                  |         111
+              8 | 2018-08-01 |         80 |               14 |         777
+              9 | 2018-09-01 |         90 |               10 |         444
+             10 | 2018-10-01 |         10 |               11 |         111
+             11 | 2018-11-01 |         11 |                8 |         222
+             12 | 2018-12-01 |         12 |                3 |         888
+             13 | 2018-01-13 |         13 |                1 |         111
+             14 | 2018-01-14 |         14 |                  |         444
+             15 | 2018-01-15 |         15 |                5 |         777
+             16 | 2018-01-16 |         16 |                7 |         666
+             17 | 2018-01-17 |         17 |               10 |         111
+(17 rows)
+
+csc343h-zhan4662=> SELECT * from transactionsofstore;
+ transaction_id | store_id 
+----------------+----------
+              1 |        1
+              2 |        1
+              3 |        1
+              4 |        1
+              5 |        2
+              6 |        2
+              7 |        3
+              8 |        4
+              9 |        4
+             10 |        5
+             11 |        5
+             12 |        6
+             13 |        6
+             14 |        3
+(14 rows)
+
+csc343h-zhan4662=> \q
+dbsrv1:~/CSC343/assignment/a3$ exit
 logout
 Connection to dbsrv1.teach.cs.toronto.edu closed.
+

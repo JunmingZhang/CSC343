@@ -1,4 +1,4 @@
-b2220-10:~/CSC343$ ssh zhan4662@dbsrv1.teach.cs.toronto.edu
+b2220-10:~/CSC343/assignment/a3$ ssh zhan4662@dbsrv1.teach.cs.toronto.edu
     Type "faq" to view FAQ, and "rules" to view usage policy.
     Report system problems by sending email to <sysadmin@teach.cs.toronto.edu>.
 
@@ -9,10 +9,10 @@ some information about your computer account (e.g. login name, process data,
 etc.) will be available to other users sharing this system, in ways 
 typical of shared Linux systems.  
 
-Last login: Mon Aug  5 20:04:03 2019 from b2220-10.teach.cs.toronto.edu
+Last login: Mon Aug  5 20:36:54 2019 from b2220-10.teach.cs.toronto.edu
 dbsrv1:~$ ls
 A1  a2  a3  a4  Android  csc209  CSC343  csc343db  CSC384  Desktop  Downloads  JDBC_exercise  mozilla.pdf  multiagent  prep6_queries.txt  R  Test1_May2018.pdf  Thunderbird_Folders  world_empty.sql  zhan4662
-dbsrv1:~$ cd CSC343/assignment/a3
+dbsrv1:~$ cd CSC343/a*/a3
 dbsrv1:~/CSC343/assignment/a3$ ls
 a3_handout.pdf  A3.pdf  A3.tex  fruits.ddl  fruits-demo.txt
 dbsrv1:~/CSC343/assignment/a3$ psql csc343h-zhan4662
@@ -54,7 +54,7 @@ csc343h-zhan4662=> \d
  fruits | transactionsofstore | table | zhan4662
 (6 rows)
 
-csc343h-zhan4662=> SELECT * from beverages;
+csc343h-zhan4662=> SELECT * FROM beverages;
  beverage_id | name_of_beverage_sold | beverage_regular_calories | beverage_large_calories 
 -------------+-----------------------+---------------------------+-------------------------
          111 | Apple                 |                       200 |                     400
@@ -67,7 +67,7 @@ csc343h-zhan4662=> SELECT * from beverages;
          888 | Mango                 |                       200 |                     400
 (8 rows)
 
-csc343h-zhan4662=> SELECT * from inventory;
+csc343h-zhan4662=> SELECT * FROM inventory;
  store_id | beverage_id | amount 
 ----------+-------------+--------
         1 |         111 |     11
@@ -120,7 +120,7 @@ csc343h-zhan4662=> SELECT * from inventory;
         6 |         888 |     68
 (48 rows)
 
-csc343h-zhan4662=> SELECT * from loyality_cards;
+csc343h-zhan4662=> SELECT * FROM loyality_cards;
  loyality_card_id | card_home_store | number_of_tran_in_card 
 ------------------+-----------------+------------------------
                 1 |               1 |                     10
@@ -140,7 +140,7 @@ csc343h-zhan4662=> SELECT * from loyality_cards;
                15 |               3 |                     34
 (15 rows)
 
-csc343h-zhan4662=> SELECT * from stores;
+csc343h-zhan4662=> SELECT * FROM stores;
  store_id |   city    | phone_number | manager 
 ----------+-----------+--------------+---------
         1 | Toronto   |         1111 | Peter
@@ -151,7 +151,7 @@ csc343h-zhan4662=> SELECT * from stores;
         6 | Beijing   |         4444 | James
 (6 rows)
 
-csc343h-zhan4662=> SELECT * from transactioninfo;
+csc343h-zhan4662=> SELECT * FROM transactioninfo;
  transaction_id | tran_date  | tran_price | loyality_card_id | beverage_id 
 ----------------+------------+------------+------------------+-------------
               1 | 2018-01-01 |         10 |                  |         111
@@ -173,7 +173,7 @@ csc343h-zhan4662=> SELECT * from transactioninfo;
              17 | 2018-01-17 |         17 |               10 |         111
 (17 rows)
 
-csc343h-zhan4662=> SELECT * from transactionsofstore;
+csc343h-zhan4662=> SELECT * FROM transactionsofstore;
  transaction_id | store_id 
 ----------------+----------
               1 |        1
@@ -196,4 +196,6 @@ csc343h-zhan4662=> \q
 dbsrv1:~/CSC343/assignment/a3$ exit
 logout
 Connection to dbsrv1.teach.cs.toronto.edu closed.
+
+
 

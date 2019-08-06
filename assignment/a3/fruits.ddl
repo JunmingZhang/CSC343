@@ -29,9 +29,8 @@ CREATE TABLE loyality_cards(
 
 -- the beverage a store sells
 -- description of not null: name_of_beverage_sold, beverage_regular_calories,
--- beverage_large_calories, beverage_regular_stock, beverage_large_stock are
--- not null, since these are basic data of a beverage type and used to
--- tell the name of a beverage and distinguish regular and large beverage
+-- beverage_large_calories are not null, since these are basic data of a beverage
+-- type and used to tell the name of a beverage and distinguish regular and large beverage
 CREATE TABLE beverages(
     beverage_id INT primary key, -- id of the beverage
     name_of_beverage_sold VARCHAR(100) NOT NULL, -- the name of this beverage

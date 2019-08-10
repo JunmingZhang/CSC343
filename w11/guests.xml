@@ -1,0 +1,17 @@
+<?xml version="1.0" standalone="yes" ?>
+<GuestList>
+   <Event date="171204" start="1400" end="1630"/>
+   <Invitee nickname="Rin" response="yes">
+      <Who age="11" email="cjf@gmail.com">
+         <First>Catherine</First>
+         <Middle>Julia</Middle>
+         <Last>Fairgrieve</Last>
+      </Who>
+   </Invitee>
+   <Invitee response = "no">
+      <Who age="9" email="cm@gmail.com">
+         <First>Chloe</First>
+         <Last>McLaughlin</Last>
+      </Who>
+  </Invitee>
+</GuestList>

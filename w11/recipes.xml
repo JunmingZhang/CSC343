@@ -1,0 +1,55 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE RECIPES [
+   <!ELEMENT RECIPES (RECIPE)+>
+   <!ELEMENT RECIPE (INGREDIENTS, STEPS)>
+   <!ATTLIST RECIPE name CDATA #REQUIRED>
+   <!ATTLIST RECIPE type CDATA #IMPLIED>
+   <!ATTLIST RECIPE keywords CDATA #IMPLIED>
+   <!ELEMENT INGREDIENTS (INGREDIENT)+>
+   <!ELEMENT INGREDIENT (NAME, QUANTITY)>
+   <!ELEMENT NAME (#PCDATA)>
+   <!ELEMENT QUANTITY EMPTY>
+   <!ATTLIST QUANTITY amount CDATA #REQUIRED>
+   <!ATTLIST QUANTITY units CDATA #IMPLIED>
+   <!ELEMENT STEPS (STEP+)>
+   <!ELEMENT STEP (#PCDATA)>
+]>
+<RECIPES>
+   <RECIPE name="hard-boiled egg" type="breakfast" keywords="protein easy">
+      <INGREDIENTS>
+         <INGREDIENT>
+             <NAME>egg</NAME>
+             <QUANTITY amount="1"/>
+         </INGREDIENT>
+      </INGREDIENTS>
+      <STEPS>
+         <STEP>
+            Boil for 12 minutes.
+         </STEP>
+      </STEPS>
+   </RECIPE>
+   <RECIPE name="oatmeal" type="breakfast" keywords="fibre">
+      <INGREDIENTS>
+         <INGREDIENT>
+             <NAME>oatmeal</NAME>
+             <QUANTITY amount="1/3" units="cup"/>
+         </INGREDIENT>
+         <INGREDIENT>
+             <NAME>water</NAME>
+             <QUANTITY amount="2/3" units="cup"/>
+         </INGREDIENT>
+         <INGREDIENT>
+             <NAME>salt</NAME>
+             <QUANTITY amount="1" units="pinch"/>
+         </INGREDIENT>
+      </INGREDIENTS>
+      <STEPS>
+         <STEP>
+            Put ingredients into a pot and bring to a boil.
+         </STEP>
+         <STEP>
+            Cook for 5 minutes, stirring occassionally.
+         </STEP>
+      </STEPS>
+   </RECIPE>
+</RECIPES>

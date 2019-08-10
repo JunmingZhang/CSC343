@@ -1,0 +1,8 @@
+{
+    "order": 435,
+    "customer": "Michelle",
+    "order_items": ["BLT", {"coffee": {
+                "fixings": ["cream", "sugar"],
+                "size": "small"}}, 
+               "timbit", {"coffee": {}}],
+    "drive_thru": false}

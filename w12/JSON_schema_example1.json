@@ -1,0 +1,54 @@
+{
+	"description": "example defining coffee subschema",
+
+	"definitions": {
+		"coffee": {
+			"type": "object",
+			"properties": {
+				"coffee": {
+					"type": "object",
+					"properties": {
+						"size": {
+							"type": "string",
+							"enum": ["small", "medium", "large"]
+						},
+						"fixings": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": ["sugar", "cream", "milk"]
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+
+	"type": "object",
+	"properties": {
+		"order": {
+			"type": "number"
+		},
+		"customer": {
+			"type": "string"
+		},
+		"order_items": {
+			"type": "array",
+			"items": {
+				"anyOf": [{
+						"$ref": "#/definitions/coffee"
+					},
+					{
+						"type": "string"
+					}
+				]
+			}
+		},
+		"drive_thru": {
+			"type": "boolean"
+		}
+	},
+	"required": ["order", "customer", "order_items"],
+	"additionalProperties": false
+}

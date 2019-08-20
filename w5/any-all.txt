@@ -1,0 +1,73 @@
+-- Domain: Guess the number of jelly beans in a jar.
+
+-- FYI, these are the statements that define the table and populate it:
+
+create table Guesses (number int, name text, guess int);
+
+insert into Guesses values
+(1, 'Cole', 365), (2, 'Avery', 500), (3, 'Sam', 502), (4, 'Madeleine', 390), 
+(5, 'Cole', 450), (6, 'Michael', 1000), (7, 'Mackenzie', 700), 
+(8, 'Mackenzie', 701);
+
+-- Let's see what we have.
+
+csc343h-dianeh=> select * from guesses;
+ number |   name    | guess 
+--------+-----------+-------
+      1 | Cole      |   365
+      2 | Avery     |   500
+      3 | Sam       |   502
+      4 | Madeleine |   390
+      5 | Cole      |   450
+      6 | Michael   |  1000
+      7 | Mackenzie |   700
+      8 | Mackenzie |   701
+(8 rows)
+
+-- Why doesn't this give you the maximum guess?
+
+csc343h-dianeh=> select * from guesses where guess > any (select guess from guesses);
+ number |   name    | guess 
+--------+-----------+-------
+      2 | Avery     |   500
+      3 | Sam       |   502
+      4 | Madeleine |   390
+      5 | Cole      |   450
+      6 | Michael   |  1000
+      7 | Mackenzie |   700
+      8 | Mackenzie |   701
+(7 rows)
+
+-- "Any" sounds a lot like "every" in this query.  But it means "any one or more".
+-- Remember that ANY is existentially quantified.
+-- I think this query sounds much more like what it actually is when we express it
+-- instead with the keyword SOME, which is a synonym for ANY in SQL.
+
+csc343h-dianeh=> select * from guesses where guess > some (select guess from guesses);
+ number |   name    | guess 
+--------+-----------+-------
+      2 | Avery     |   500
+      3 | Sam       |   502
+      4 | Madeleine |   390
+      5 | Cole      |   450
+      6 | Michael   |  1000
+      7 | Mackenzie |   700
+      8 | Mackenzie |   701
+(7 rows)
+
+-- Okay, let's switch to ALL, which is universally quantified.
+-- Why doesn't this give you the maximum guess?
+
+csc343h-dianeh=> select * from guesses where guess > all (select guess from guesses);
+ number | name | guess 
+--------+------+-------
+(0 rows)
+
+-- The maximum value (1000) isn't greater than every value because it's not greater than
+-- itself!  To get the max, we must change to >=
+
+csc343h-dianeh=> select * from guesses where guess >= all (select guess from guesses);
+ number |  name   | guess 
+--------+---------+-------
+      6 | Michael |  1000
+(1 row)

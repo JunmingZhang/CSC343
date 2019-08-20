@@ -1,0 +1,97 @@
+-- Comparisons to NULL always evaluate to UNKNOWN, and WHERE is too picky to
+-- include UNKNOWNS.
+
+-- All our courses have a value in every cell, except that there is one NULL
+-- in CSC100: we don't know whether or not it is a breadth course.
+
+csc343h-dianeh=> select * from course;
+
+ cnum |              name              | dept | breadth 
+------+--------------------------------+------+---------
+  343 | Intro to Databases             | CSC  | f
+  207 | Software Design                | CSC  | f
+  148 | Intro to Comp Sci              | CSC  | f
+  263 | Data Struct & Anal             | CSC  | f
+  320 | Intro to Visual Computing      | CSC  | f
+  200 | Intro Archaeology              | ANT  | t
+  203 | Human Biol & Evol              | ANT  | f
+  150 | Organisms in Environ           | EEB  | f
+  216 | Marine Mammal Bio              | EEB  | f
+  263 | Compar Vert Anatomy            | EEB  | f
+  110 | Narrative                      | ENG  | t
+  205 | Rhetoric                       | ENG  | t
+  235 | The Graphic Novel              | ENG  | t
+  200 | Environmental Change           | ENV  | f
+  320 | Natl & Intl Env Policy         | ENV  | f
+  220 | Mediaeval Society              | HIS  | t
+  296 | Black Freedom                  | HIS  | t
+  222 | COBOL programming              | CSC  | f
+  100 | CSC for Future Prime Ministers | CSC  | 
+(19 rows)
+
+-- We can see the courses that have breadth true.
+-- The course with NULL for breadth does not satisfy this, as expected.
+-- WHERE is picky!
+
+csc343h-dianeh=> select * from course where breadth;
+ cnum |       name        | dept | breadth 
+------+-------------------+------+---------
+  200 | Intro Archaeology | ANT  | t
+  110 | Narrative         | ENG  | t
+  205 | Rhetoric          | ENG  | t
+  235 | The Graphic Novel | ENG  | t
+  220 | Mediaeval Society | HIS  | t
+  296 | Black Freedom     | HIS  | t
+(6 rows)
+
+-- The course with NULL for breadth does not satisfy 
+-- the condition "not breadth" either.
+
+csc343h-dianeh=> select * from course where not breadth;
+
+ cnum |           name            | dept | breadth 
+------+---------------------------+------+---------
+  343 | Intro to Databases        | CSC  | f
+  207 | Software Design           | CSC  | f
+  148 | Intro to Comp Sci         | CSC  | f
+  263 | Data Struct & Anal        | CSC  | f
+  320 | Intro to Visual Computing | CSC  | f
+  203 | Human Biol & Evol         | ANT  | f
+  150 | Organisms in Environ      | EEB  | f
+  216 | Marine Mammal Bio         | EEB  | f
+  263 | Compar Vert Anatomy       | EEB  | f
+  200 | Environmental Change      | ENV  | f
+  320 | Natl & Intl Env Policy    | ENV  | f
+  222 | COBOL programming         | CSC  | f
+(12 rows)
+
+-- But our course NULL for breadth doesn't satisfy the condition
+-- "breadth or not breadth", even though it is a tautology.  
+-- This is a bit of a surprise, but it makes sense when we
+-- remember the truth table for OR:
+--    The value of "breadth" is unknown.
+--    The value of "not breadth" is unknown.
+--    The OR of two unknowns is unknown.
+
+csc343h-dianeh=> select * from course where breadth or not breadth;
+ cnum |           name            | dept | breadth 
+------+---------------------------+------+---------
+  343 | Intro to Databases        | CSC  | f
+  207 | Software Design           | CSC  | f
+  148 | Intro to Comp Sci         | CSC  | f
+  263 | Data Struct & Anal        | CSC  | f
+  320 | Intro to Visual Computing | CSC  | f
+  200 | Intro Archaeology         | ANT  | t
+  203 | Human Biol & Evol         | ANT  | f
+  150 | Organisms in Environ      | EEB  | f
+  216 | Marine Mammal Bio         | EEB  | f
+  263 | Compar Vert Anatomy       | EEB  | f
+  110 | Narrative                 | ENG  | t
+  205 | Rhetoric                  | ENG  | t
+  235 | The Graphic Novel         | ENG  | t
+  200 | Environmental Change      | ENV  | f
+  320 | Natl & Intl Env Policy    | ENV  | f
+  220 | Mediaeval Society         | HIS  | t
+  296 | Black Freedom             | HIS  | t
+  222 | COBOL programming         | CSC  | f
+(18 rows)

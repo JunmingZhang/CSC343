@@ -1,0 +1,40 @@
+-- Does SELECT DISTINCT treat two NULLs as the same?
+
+-- Setup:
+
+csc343h-dianeh=> create table X(a int, b int);
+CREATE TABLE
+csc343h-dianeh=> insert into X values (1, 2), (null, 3), (null, 4);
+INSERT 0 3
+csc343h-dianeh=> select * from X
+csc343h-dianeh-> ;
+ a | b 
+---+---
+ 1 | 2
+   | 3
+   | 4
+(3 rows)
+
+-- If we ask for just column a, of course we will see the two NULL values.
+
+csc343h-dianeh=> select a from X;
+ a 
+---
+ 1
+  
+  
+(3 rows)
+
+-- If we ask for distinct values, the two NULLs are collapsed to one.
+-- SELECT DISTINCT has considered the two NULL values to be the same.
+
+csc343h-dianeh=> select distinct a from x;
+ a 
+---
+ 1
+  
+(2 rows)
+
+-- But notice that it didn't consider NULL to be the same as 1, or it
+-- would have had to remove either the 1 or the NULL in order to give us 
+-- distinct values.

@@ -1,0 +1,14 @@
+csc343h-dianeh=> create table ages(name text, age int);
+CREATE TABLE
+csc343h-dianeh=> insert into ages values
+csc343h-dianeh-> ('Amna', 21), ('Zach', 25), ('Miriam', null), ('Ben', 0);
+INSERT 0 4
+csc343h-dianeh=> select * from ages where age*0 = 0;
+ name | age 
+------+-----
+ Amna |  21
+ Zach |  25
+ Ben  |   0
+(3 rows)
+
+-- Miriam is not included, even though her age times zero would be zero no matter what her age is

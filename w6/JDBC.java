@@ -52,8 +52,8 @@ class JDBCJellyBean {
 				// with postgres on cdf -- but you would replace "dianeh"
 				// with your cdf account name.
 				// Password really does need to be the emtpy string.
-				url = "jdbc:postgresql://localhost:5432/csc343h-wangpeiq";
-				conn = DriverManager.getConnection(url, "wangpeiq", "");
+				url = "jdbc:postgresql://localhost:5432/csc343h-zhan4662";
+				conn = DriverManager.getConnection(url, "zhan4662", "");
 
 				// The next query depends on user input, so we are wise to
 				// prepare it before inserting the user input.
